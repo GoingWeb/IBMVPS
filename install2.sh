@@ -23,7 +23,7 @@ echo './v2ray&'>>start.sh
 echo 'sleep 9d'>>start.sh
 echo 'kill -9 $(ps -ef|grep v2ray|grep -v grep|awk "'"{print \$2}"'")'>>start.sh
 echo 'web: ./start.sh'>Procfile
-wget https://github.com/v2ray/v2ray-core/releases/latest/download/v2ray-linux-64.zip
+wget https://github.com/v2fly/v2ray-core/releases/latest/download/v2ray-linux-64.zip
 unzip -d v2ray v2ray-linux-64.zip
 cd v2ray
 chmod 777 *
@@ -39,7 +39,7 @@ echo '  random-route: true'>>manifest.yml
 echo '  memory: '$ramsize'M'>>manifest.yml
 chmod 777 start.sh
 ibmcloud target --cf
-ibmcloud cf push
+ibmcloud cf install
 domain=`ibmcloud cf app $appname | grep routes | cut -f2 -d':' | sed 's/ //g'`
 vmess=`echo '{"add":"'$domain'","aid":"64","host":"","id":"'$uuid'","net":"ws","path":"/'$path'","port":"443","ps":"IBM_Cloud","tls":"tls","type":"none","v":"2"}' | base64 -w 0`
 cd ..
